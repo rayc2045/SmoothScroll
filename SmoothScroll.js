@@ -1,10 +1,10 @@
-class SmoothVerticalScroll {
+class SmoothScroll {
 	constructor(_containerSelector, _params = { duration: 500, timingFunction: 'easeOutQuart' }) {
 		// Init DOM elements
 		this.$ = {
 			container: document.querySelector(_containerSelector),
-			containerBody: document.querySelector(_containerSelector + '__body'),
-			hitbox: document.querySelector(_containerSelector + '__hitbox')
+			containerBody: document.querySelector(_containerSelector + '-body'),
+			hitbox: document.querySelector(_containerSelector + '-hitbox')
 			// controlsDuration: document.querySelector('.controls input[type=range]'),
 			// controlsEasing: document.querySelectorAll('.controls__radio'),
 			// controlsEasingRadio: document.querySelectorAll('.controls input[type=radio]'),
