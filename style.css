@@ -1,6 +1,6 @@
 h1 {
   width: 100%;
-  margin-left: 20px;
+  padding-left: 20px;
   font-weight: 800;
   font-size: 100px;
   opacity: .8;
@@ -16,8 +16,7 @@ body {
 }
 
 p {
-  width: 100%;
-  margin-left: 20px;
+  padding: 20px;
   font-size: 70px;
   opacity: .6;
   font-weight: 500;
@@ -40,7 +39,7 @@ xmp {
   margin: 0 auto;
 }
 
-.container__body {
+.container-body {
   width: 60vw;
   min-width: 300px;
   margin: 0 auto;
@@ -92,7 +91,7 @@ xmp {
   background-color: #F6F7FC;
   font-weight: 600;
 }
-.controls__duration {
+.controls-duration {
   font-weight: 400;
   color: var(--grey);
 }

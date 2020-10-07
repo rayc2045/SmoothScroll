@@ -9,7 +9,7 @@
 </head>
 <body>
   <div class="container">
-    <div class="container__body">
+    <div class="container-body">
       <h1>SmoothScroll.js</h1>
       <div class="hero">
         <p>SmoothScroll.js is 100% using vanilla javascript smooth scroll. No libraries, no frameworks, just 80 lines of javascript.</p>
@@ -53,43 +53,56 @@
     </div>
   </div>
 
-  <div class="container__hitbox"></div>
+  <div class="container-hitbox"></div>
   
-  <!-- <div class="controls">
-    <h2 class="controls__title">Duration</h2>
-    <span class="controls__duration">500ms</span>
+  <div class="controls">
+    <h2 class="controls-title">Duration</h2>
+    <span class="controls-duration">500ms</span>
     <input type="range" name="points" step="100" value="500" min="0" max="3000">
-    <h2 class="controls__title">Easing</h2>
-    <div class="controls__radio">
-      <input type="radio" id="easeOutExpo" name="drone" value="cubic-bezier(0.19, 1, 0.22, 1)">
+    <h2 class="controls-title">Easing</h2>
+    <div class="controls-radio">
+      <input type="radio" id="easeOutExpo" name="drone">
       <label for="easeOutExpo">EaseOutExpo</label>
     </div>
-    <div class="controls__radio">
-      <input type="radio" id="easeOutQuint" name="drone" value="cubic-bezier(0.23, 1, 0.32, 1)" checked>
+    <div class="controls-radio">
+      <input type="radio" id="easeOutQuint" name="drone" checked>
       <label for="easeOutQuint">EaseOutQuint</label>
     </div>
-    <div class="controls__radio">
-      <input type="radio" id="easeOutQuart" name="drone" value="cubic-bezier(0.165, 0.84, 0.44, 1)">
+    <div class="controls-radio">
+      <input type="radio" id="easeOutQuart" name="drone">
       <label for="easeOutQuart">EaseOutQuart</label>
     </div>
-    <div class="controls__radio">
-      <input type="radio" id="easeOutCubic" name="drone" value="cubic-bezier(0.215, 0.61, 0.355, 1)">
+    <div class="controls-radio">
+      <input type="radio" id="easeOutCubic" name="drone">
       <label for="easeOutCubic">EaseOutCubic</label>
     </div>
-    <div class="controls__radio">
-      <input type="radio" id="easeOutQuad" name="drone" value="cubic-bezier(0.25, 0.46, 0.45, 0.94)">
+    <div class="controls-radio">
+      <input type="radio" id="easeOutQuad" name="drone">
       <label for="easeOutQuad">EaseOutQuad</label>
     </div>
-    <div class="controls__radio">
-      <input type="radio" id="easeOutBack" name="drone" value="cubic-bezier(0.175, 0.885, 0.32, 1.275)">
+    <div class="controls-radio">
+      <input type="radio" id="easeOutBack" name="drone">
       <label for="easeOutBack">EaseOutBack</label>
     </div>
-    
-    
-  </div> -->
+  </div>
   <script src="./SmoothScroll.js"></script>
   <script>
-    new SmoothVerticalScroll('.container');
+    const controlsDuration = document.querySelector('.controls input[type=range]');
+    const duration = document.querySelector('.controls-duration');
+    const controlsEasing = document.querySelectorAll('.controls-radio');
+    const controlsEasingRadio = document.querySelectorAll('.controls input[type=radio]');
+    let smoothScroll = new SmoothScroll('.container');
+    
+    controlsDuration.addEventListener('mouseup', () => {
+      duration.innerText = controlsDuration.value + 'ms';
+      params.duration = controlsDuration.value;
+    });
+
+    for(let i = 0; i < controlsEasing.length; i++) {
+      controlsEasing[i].addEventListener('mouseup', () => {
+        params.timingFunction = controlsEasingRadio[i].id;
+      })
+    }
   </script>
 </body>
 </html>
