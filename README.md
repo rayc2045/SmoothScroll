@@ -1,1 +1,1 @@
-# smoothScroll
+# SmoothScroll.js
