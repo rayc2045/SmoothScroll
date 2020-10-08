@@ -5,10 +5,6 @@ class SmoothScroll {
 			container: document.querySelector(_containerSelector),
 			containerBody: document.querySelector(_containerSelector + '-body'),
 			hitbox: document.querySelector(_containerSelector + '-hitbox')
-			// controlsDuration: document.querySelector('.controls input[type=range]'),
-			// controlsEasing: document.querySelectorAll('.controls__radio'),
-			// controlsEasingRadio: document.querySelectorAll('.controls input[type=radio]'),
-			// duration: document.querySelector('.controls__duration')
 		};
 
 		// Init params
@@ -16,8 +12,8 @@ class SmoothScroll {
 			containerHeight: this.$.containerBody.offsetHeight,
 			duration: _params.duration,
 			timingFunction: _params.timingFunction
-    };
-    
+		};
+
 		this.scrollType = {
 			easeOutExpo: 'cubic-bezier(0.19, 1, 0.22, 1)',
 			easeOutQuint: 'cubic-bezier(0.23, 1, 0.32, 1)',
@@ -56,9 +52,9 @@ class SmoothScroll {
 				setTimeout(() => {
 					addTransition(currentTranslateY);
 				}, 10);
-      }
-      // Add transition
-      return this.$.containerBody.style.transition = `transform ${this.params.duration}ms ${this.params.timingFunction}`;
+			}
+			// Add transition
+			return (this.$.containerBody.style.transition = `transform ${this.params.duration}ms ${this.params.timingFunction}`);
 		};
 		// Run addTransition
 		addTransition();
@@ -75,20 +71,8 @@ class SmoothScroll {
 			this._handleResize();
 		});
 		window.addEventListener('load', () => {
-      this._handleEasing(this.scrollType[this.params.timingFunction]);
-    });
-
-    // // Listening mouseup on duration range
-		// this.$.controlsDuration.addEventListener('mouseup', () => {
-		// 	this._handleDuration();
-		// });
-
-		// // Listening mouseup on radio
-		// for (let i = 0; i < this.$.controlsEasing.length; i++) {
-		// 	this.$.controlsEasing[i].addEventListener('mouseup', () => {
-		// 		this._handleEasing(this.$.controlsEasingRadio[i].value);
-		// 	});
-		// }
+			this._handleEasing(this.scrollType[this.params.timingFunction]);
+		});
 	}
 
 	_handleScroll(_event) {
@@ -122,3 +106,5 @@ class SmoothScroll {
 		this.$.containerBody.style.transition = `transform ${this.params.duration}ms ${this.params.timingFunction}`;
 	}
 }
+
+new SmoothScroll('.container');

@@ -54,55 +54,6 @@
   </div>
 
   <div class="container-hitbox"></div>
-  
-  <div class="controls">
-    <h2 class="controls-title">Duration</h2>
-    <span class="controls-duration">500ms</span>
-    <input type="range" name="points" step="100" value="500" min="0" max="3000">
-    <h2 class="controls-title">Easing</h2>
-    <div class="controls-radio">
-      <input type="radio" id="easeOutExpo" name="drone">
-      <label for="easeOutExpo">EaseOutExpo</label>
-    </div>
-    <div class="controls-radio">
-      <input type="radio" id="easeOutQuint" name="drone" checked>
-      <label for="easeOutQuint">EaseOutQuint</label>
-    </div>
-    <div class="controls-radio">
-      <input type="radio" id="easeOutQuart" name="drone">
-      <label for="easeOutQuart">EaseOutQuart</label>
-    </div>
-    <div class="controls-radio">
-      <input type="radio" id="easeOutCubic" name="drone">
-      <label for="easeOutCubic">EaseOutCubic</label>
-    </div>
-    <div class="controls-radio">
-      <input type="radio" id="easeOutQuad" name="drone">
-      <label for="easeOutQuad">EaseOutQuad</label>
-    </div>
-    <div class="controls-radio">
-      <input type="radio" id="easeOutBack" name="drone">
-      <label for="easeOutBack">EaseOutBack</label>
-    </div>
-  </div>
   <script src="./SmoothScroll.js"></script>
-  <script>
-    const controlsDuration = document.querySelector('.controls input[type=range]');
-    const duration = document.querySelector('.controls-duration');
-    const controlsEasing = document.querySelectorAll('.controls-radio');
-    const controlsEasingRadio = document.querySelectorAll('.controls input[type=radio]');
-    let smoothScroll = new SmoothScroll('.container');
-    
-    controlsDuration.addEventListener('mouseup', () => {
-      duration.innerText = controlsDuration.value + 'ms';
-      params.duration = controlsDuration.value;
-    });
-
-    for(let i = 0; i < controlsEasing.length; i++) {
-      controlsEasing[i].addEventListener('mouseup', () => {
-        params.timingFunction = controlsEasingRadio[i].id;
-      })
-    }
-  </script>
 </body>
 </html>
