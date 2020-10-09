@@ -50,13 +50,14 @@
       <div class="block"></div>
     </div>
   </div>
-  <script src="./SmoothScroll.min.js"></script>
+  
+  <script src="https://raw.githubusercontent.com/rayc2045/SmoothScroll/main/SmoothScroll/SmoothScroll.min.js"></script>
   <script>
     document.querySelector('.viewport').style.position = 'fixed';
 
     new SmoothScroll({
       target: document.querySelector('.container'),
-      scrollEase: 0.1,
+      scrollEase: 0.08,
       maxOffset: 500
     });
   </script>
