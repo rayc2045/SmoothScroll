@@ -1,110 +1,110 @@
-class SmoothScroll {
-	constructor(_containerSelector, _params = { duration: 500, timingFunction: 'easeOutQuart' }) {
-		// Init DOM elements
-		this.$ = {
-			container: document.querySelector(_containerSelector),
-			containerBody: document.querySelector(_containerSelector + '-body'),
-			hitbox: document.querySelector(_containerSelector + '-hitbox')
-		};
-
-		// Init params
-		this.params = {
-			containerHeight: this.$.containerBody.offsetHeight,
-			duration: _params.duration,
-			timingFunction: _params.timingFunction
-		};
-
-		this.scrollType = {
-			easeOutExpo: 'cubic-bezier(0.19, 1, 0.22, 1)',
-			easeOutQuint: 'cubic-bezier(0.23, 1, 0.32, 1)',
-			easeOutQuart: 'cubic-bezier(0.165, 0.84, 0.44, 1)',
-			easeOutCubic: 'cubic-bezier(0.215, 0.61, 0.355, 1)',
-			easeOutQuad: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-			easeOutBack: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)'
-		};
-
-		// Launch init functions
-		document.addEventListener('DOMContentLoaded', () => {
-			this._initStyle();
-			this._initListeners();
-		});
-	}
-
-	_initStyle() {
-		const currentScrollY = window.scrollY;
-
-		// Set container style
-		this.$.container.style.overflow = `hidden`;
-		this.$.container.style.position = `fixed`;
-		this.$.container.style.height = `100vh`;
-
-		// Set containerBody style
-		this.$.containerBody.style.transform = `translateY(${-window.scrollY}px)`; // Scroll to current scroll
-
-		// Add transition after scroll to
-		const addTransition = () => {
-			// Set currentTranslateY
-			const regex = /\s?([,])\s?/;
-			const splitTransform = getComputedStyle(this.$.containerBody).transform.split(regex);
-			const currentTranslateY = parseInt(splitTransform[splitTransform.length - 1]);
-
-			if (-currentTranslateY !== currentScrollY) {
-				setTimeout(() => {
-					addTransition(currentTranslateY);
-				}, 10);
+'use strict';
+// 10/31/2017
+var SmoothScroll /** @class */ = (function() {
+	function SmoothScroll(options) {
+		var _this = this;
+		this.endThreshold = 0.05;
+		this.requestId = null;
+		this.maxDepth = 10;
+		this.viewHeight = 0;
+		this.halfViewHeight = 0;
+		this.maxDistance = 0;
+		this.scrollHeight = 0;
+		this.endScroll = 0;
+		this.currentScroll = 0;
+		this.resizeRequest = 1;
+		this.scrollRequest = 0;
+		this.scrollItems = [];
+		this.lastTime = -1;
+		this.maxElapsedMS = 100;
+		this.targetFPMS = 0.06;
+		this._onResize = function(event) {
+			_this.resizeRequest++;
+			if (!_this.requestId) {
+				_this.lastTime = performance.now();
+				_this.requestId = requestAnimationFrame(_this._update);
 			}
-			// Add transition
-			return (this.$.containerBody.style.transition = `transform ${this.params.duration}ms ${this.params.timingFunction}`);
 		};
-		// Run addTransition
-		addTransition();
-
-		// Set hitox style
-		this.$.hitbox.style.height = `${this.params.containerHeight}px`;
+		this._onScroll = function(event) {
+			_this.scrollRequest++;
+			if (!_this.requestId) {
+				_this.lastTime = performance.now();
+				_this.requestId = requestAnimationFrame(_this._update);
+			}
+		};
+		this._update = function(currentTime) {
+			if (currentTime === void 0) {
+				currentTime = performance.now();
+			}
+			var elapsedMS = currentTime - _this.lastTime;
+			if (elapsedMS > _this.maxElapsedMS) {
+				elapsedMS = _this.maxElapsedMS;
+			}
+			var deltaTime = elapsedMS * _this.targetFPMS;
+			var dt = 1 - Math.pow(1 - _this.scrollEase, deltaTime);
+			var resized = _this.resizeRequest > 0;
+			var scrollY = window.pageYOffset;
+			if (resized) {
+				var height = _this.target.clientHeight;
+				document.body.style.height = height + 'px';
+				_this.scrollHeight = height;
+				_this.viewHeight = window.innerHeight;
+				_this.halfViewHeight = _this.viewHeight / 2;
+				_this.maxDistance = _this.viewHeight * 2;
+				_this.resizeRequest = 0;
+			}
+			_this.endScroll = scrollY;
+			// this.currentScroll += (scrollY - this.currentScroll) * this.scrollEase;
+			_this.currentScroll += (scrollY - _this.currentScroll) * dt;
+			if (Math.abs(scrollY - _this.currentScroll) < _this.endThreshold || resized) {
+				_this.currentScroll = scrollY;
+				_this.scrollRequest = 0;
+			}
+			// const scrollOrigin = scrollY + this.halfViewHeight;
+			var scrollOrigin = _this.currentScroll + _this.halfViewHeight;
+			_this.target.style.transform = 'translate3d(0px,-' + _this.currentScroll + 'px,0px)';
+			for (var i = 0; i < _this.scrollItems.length; i++) {
+				var item = _this.scrollItems[i];
+				var distance = scrollOrigin - item.top;
+				var offsetRatio = distance / _this.maxDistance;
+				item.endOffset = Math.round(_this.maxOffset * item.depthRatio * offsetRatio);
+				if (Math.abs(item.endOffset - item.currentOffset < _this.endThreshold)) {
+					item.currentOffset = item.endOffset;
+				} else {
+					// item.currentOffset += (item.endOffset - item.currentOffset) * this.scrollEase;
+					item.currentOffset += (item.endOffset - item.currentOffset) * dt;
+				}
+				item.target.style.transform = 'translate3d(0px,-' + item.currentOffset + 'px,0px)';
+			}
+			_this.lastTime = currentTime;
+			_this.requestId = _this.scrollRequest > 0 ? requestAnimationFrame(_this._update) : null;
+		};
+		this.target = options.target;
+		this.scrollEase = options.scrollEase != null ? options.scrollEase : 0.1;
+		this.maxOffset = options.maxOffset != null ? options.maxOffset : 500;
+		this.addItems();
+		window.addEventListener('resize', this._onResize);
+		window.addEventListener('scroll', this._onScroll);
+		this._update();
 	}
-
-	_initListeners() {
-		window.addEventListener('scroll', (event) => {
-			this._handleScroll(event);
-		});
-		window.addEventListener('resize', () => {
-			this._handleResize();
-		});
-		window.addEventListener('load', () => {
-			this._handleEasing(this.scrollType[this.params.timingFunction]);
-		});
-	}
-
-	_handleScroll(_event) {
-		this.$.containerBody.style.transform = `translateY(${-window.scrollY}px)`;
-	}
-
-	_handleResize() {
-		// Update useful params
-		this.params.containerHeight = this.$.containerBody.offsetHeight;
-
-		// Update useful style
-		this.$.hitbox.style.height = `${this.params.containerHeight}px`;
-	}
-
-	_handleDuration() {
-		// Update duration value
-		this.$.duration.innerText = `${this.$.controlsDuration.value}ms`;
-
-		// Update duration variable
-		this.params.duration = this.$.controlsDuration.value;
-
-		// Update duration
-		this.$.containerBody.style.transition = `transform ${this.params.duration}ms ${this.params.timingFunction}`;
-	}
-
-	_handleEasing(_value) {
-		// Update timing function variable
-		this.params.timingFunction = _value;
-
-		// Update duration
-		this.$.containerBody.style.transition = `transform ${this.params.duration}ms ${this.params.timingFunction}`;
-	}
-}
-
-new SmoothScroll('.container');
+	SmoothScroll.prototype.addItems = function() {
+		this.scrollItems = [];
+		var elements = document.querySelectorAll('*[data-depth]');
+		for (var i = 0; i < elements.length; i++) {
+			var element = elements[i];
+			var depth = +element.getAttribute('data-depth');
+			var rect = element.getBoundingClientRect();
+			var item = {
+				target: element,
+				depth: depth,
+				top: rect.top + window.pageYOffset,
+				depthRatio: depth / this.maxDepth,
+				currentOffset: 0,
+				endOffset: 0
+			};
+			this.scrollItems.push(item);
+		}
+		return this;
+	};
+	return SmoothScroll;
+})();

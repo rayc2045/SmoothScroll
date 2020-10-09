@@ -8,12 +8,10 @@
   <title>SmoothScroll.js</title>
 </head>
 <body>
-  <div class="container">
-    <div class="container-body">
+  <div class="viewport">
+    <div class="container">
       <h1>SmoothScroll.js</h1>
-      <div class="hero">
-        <p>SmoothScroll.js is 100% using vanilla javascript smooth scroll. No libraries, no frameworks, just 80 lines of javascript.</p>
-      </div>
+      <p>SmoothScroll.js is 100% using vanilla javaScript smooth scroll. No libraries, no frameworks, and it's only 3kb.</p>
       <div class="block"></div>
       <div class="block"></div>
       <div class="block"></div>
@@ -52,8 +50,15 @@
       <div class="block"></div>
     </div>
   </div>
+  <script src="./SmoothScroll.min.js"></script>
+  <script>
+    document.querySelector('.viewport').style.position = 'fixed';
 
-  <div class="container-hitbox"></div>
-  <script src="./SmoothScroll.js"></script>
+    new SmoothScroll({
+      target: document.querySelector('.container'),
+      scrollEase: 0.1,
+      maxOffset: 500
+    });
+  </script>
 </body>
 </html>
