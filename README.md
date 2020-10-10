@@ -10,7 +10,7 @@ A simple smooth scrolling using 100% vanilla JavaScript.
 ![Photo](https://raw.githubusercontent.com/rayc2045/SmoothScroll/main/intro.png)
 
 ## Example Codes
-```
+```html
 <body>
   <div class="viewport">
     <div class="container">
