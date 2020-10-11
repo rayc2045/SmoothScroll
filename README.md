@@ -1,4 +1,4 @@
-# smooth-scroll.js
+# SmoothScroll.js
 A simple smooth scrolling using 100% vanilla JavaScript.
 
 [Demo](https://rayc2045.github.io/SmoothScroll/)
@@ -12,7 +12,7 @@ A simple smooth scrolling using 100% vanilla JavaScript.
     </div>
   </div>
 
-  <script src="smooth-scroll.min.js"></script>
+  <script src="SmoothScroll.min.js"></script>
   <script>
     document.querySelector('.viewport').style.position = 'fixed';
 
