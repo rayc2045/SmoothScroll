@@ -1,6 +1,13 @@
+::-webkit-scrollbar {
+  width: 0;
+}
+
+html {
+  scrollbar-width: none;
+}
+
 body {
   margin: 0;
-  font-family: 'Roboto', sans-serif;
   color: #222;
 }
 
@@ -22,7 +29,6 @@ p {
 }
 
 .viewport {
-  position: fixed;
   width: 100%;
   margin: 0 auto;
 }
