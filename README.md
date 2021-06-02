@@ -1,26 +1,25 @@
 # SmoothScroll.js
-A simple smooth scrolling using 100% vanilla JavaScript.
+A simple smooth scrolling using 100% vanilla JavaScript, and it's only 3kb!
 
 [Demo](https://rayc2045.github.io/SmoothScroll/)
 
-## Usage
+### Usage
+
 ```html
-<body>
-  <div class="viewport">
-    <div class="container">
-      Your stuff here...
+// index.html
+<html>
+  <head>
+    <link rel="stylesheet" href="./css/SmoothScroll.css" />
+    <link rel="stylesheet" href="./css/content.css" />
+  </head>
+  <body>
+    <div class="viewport">
+      <div class="container">
+        // Content
+      </div>
     </div>
-  </div>
-
-  <script src="SmoothScroll.min.js"></script>
-  <script>
-    document.querySelector('.viewport').style.position = 'fixed';
-
-    new SmoothScroll({
-      target: document.querySelector('.container'),
-      scrollEase: 0.08,
-      maxOffset: 500
-    });
-  </script>
-</body>
+    <script src="./js/SmoothScroll.min.js"></script>
+    <script src="./js/script.js"></script>
+  </body>
+</html>
 ```
