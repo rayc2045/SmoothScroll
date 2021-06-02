@@ -10,7 +10,7 @@ A simple smooth scrolling using 100% vanilla JavaScript, and it's only 3kb!
 <html>
   <head>
     <link rel="stylesheet" href="./css/SmoothScroll.css" />
-    <link rel="stylesheet" href="./css/content.css" />
+    <link rel="stylesheet" href="./css/content.css" /> // Your content CSS file
   </head>
   <body>
     <div class="viewport">
