@@ -1,7 +1,7 @@
 # SmoothScroll.js
 A simple smooth scrolling using 100% vanilla JavaScript, and it's only 3kb!
 
-[Demo](https://rayc2045.github.io/SmoothScroll/)
+[> Demo](https://rayc2045.github.io/SmoothScroll/)
 
 ### Usage
 
